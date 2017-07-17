@@ -110,6 +110,7 @@ def game_loop():
     global timeElapsed
     global numWrong
     global start
+    global prevNumberCount
     numRight = 0
     numWrong = 0
     targetHit = 0
@@ -122,6 +123,7 @@ def game_loop():
     roundWon = False
     exitGame = False
 
+    prevNumberCount = [numRight, numWrong]
 
     whichTarget()
     whichTool()
@@ -139,6 +141,13 @@ def game_loop():
 
         option1.tool(zTool, 480, 50)
         option3.tool(xTool, 600, 50)
+
+    if start == 1:
+        for word in ['Ready', 'Set', 'Go']:
+            display_message(word, 40, 400, 400)
+            pygame.display.update()
+            time.sleep(0.8)
+            blank_game()
 
     while exitGame==False:
 
@@ -170,8 +179,8 @@ def game_loop():
 
                                 targetHit = 1
                             else:
-                                numWrong += 1
-                                targetHit = 0
+                                 numWrong += 1
+                                 targetHit = 0
                         elif activeTarget == 1:
                             if ymarker == 300 and xmarker == (xplayer - Ximg.size[0]):
                                 numRight += 1
@@ -179,8 +188,8 @@ def game_loop():
                                     continue
                                 targetHit = 1
                             else:
-                                numWrong += 1
-                                targetHit = 0
+                                 numWrong += 1
+                                 targetHit = 0
 
                         elif activeTarget == 2:
                             if ymarker == 300 and xmarker == (xplayer + img.size[0]):
@@ -189,8 +198,8 @@ def game_loop():
                                     continue
                                 targetHit = 1
                             else:
-                                numWrong += 1
-                                targetHit = 0
+                                 numWrong += 1
+                                 targetHit = 0
                         elif activeTarget == 3:
                             if ymarker == 600 and xmarker == (xplayer + img.size[0]):
                                 numRight += 1
@@ -198,8 +207,8 @@ def game_loop():
                                     continue
                                 targetHit = 1
                             else:
-                                numWrong += 1
-                                targetHit = 0
+                                 numWrong += 1
+                                 targetHit = 0
                     else:
                         numWrong += 1
                         targetHit = 0
@@ -244,14 +253,19 @@ def game_loop():
                     else:
                         numWrong += 1
                         targetHit = 0
+                # else:
+                #     numWrong += 1
+                #     targetHit = 0
 
             elif event.type == USEREVENT + 1:
                 whichTool()
                 whichTarget()
+
                 if activeTarget == tempActiveTarget:
                     whichTarget()
 
-                if targetHit == 0:
+                if numRight == prevNumberCount[0] and start == 0:
+                    # if targetHit == 0:
                     numWrong += 1
 
         blank_game()
@@ -275,7 +289,6 @@ def game_loop():
             option4.target((display_width - 100), (display_height - 200), red)
 
 
-        prevNumberCount = [numRight, numWrong]
         # every 0.05 second reset modifier
         timeElapsed += 1
         if timeElapsed > 60: # 46 for 800 mili
@@ -284,12 +297,6 @@ def game_loop():
         if numWrong >= 25:
             game_over()
 
-        if start == 1:
-            for word in ['Ready', 'Set', 'Go']:
-                display_message(word, 40, 400, 400)
-                pygame.display.update()
-                time.sleep(0.8)
-                blank_game()
 
         # print(timeElapsed)
         display_message('hit: {}'.format(numRight), 40, 10, 70)
