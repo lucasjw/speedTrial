@@ -38,18 +38,18 @@ pygame.time.set_timer(USEREVENT + 1, 800)
 gameFont = pygame.font.SysFont('CharlemagneStd-Bold.otf', 20)
 
 # all PLAYER IMAGES stored as variables
-playerStage1 = pygame.image.load('C:/Programming/PythonProjects/PyGame/playerStage1.png')
-with Image.open('C:/Programming/PythonProjects/PyGame/playerStage1.png') as img:
+playerStage1 = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/playerStage1.png')
+with Image.open('C:/Programming/PythonProjects/PyGame/speedTrial/playerStage1.png') as img:
     width, height = img.size
 
-directionMarker = pygame.image.load('C:/Programming/PythonProjects/PyGame/directionDetector.png')
-with Image.open('C:/Programming/PythonProjects/PyGame/directionDetector.png') as Ximg:
+directionMarker = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/directionDetector.png')
+with Image.open('C:/Programming/PythonProjects/PyGame/speedTrial/directionDetector.png') as Ximg:
     width, height = Ximg.size
 
-zTool = pygame.image.load('C:/Programming/PythonProjects/PyGame/zTool.png')
-zToolActive = pygame.image.load('C:/Programming/PythonProjects/PyGame/zToolActive.png')
-xTool = pygame.image.load('C:/Programming/PythonProjects/PyGame/xTool.png')
-xToolActive = pygame.image.load('C:/Programming/PythonProjects/PyGame/xToolActive.png')
+zTool = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/zTool.png')
+zToolActive = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/zToolActive.png')
+xTool = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/xTool.png')
+xToolActive = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/xToolActive.png')
 
 # definitions of functions
 

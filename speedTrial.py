@@ -29,8 +29,7 @@ global activeTarget
 activeTarget = 4
 global tempActiveTarget
 tempActiveTarget = 5
-global numWrong
-numWrong = 0
+global start
 
 clock = pygame.time.Clock()
 
@@ -85,11 +84,14 @@ def display_message(text, size, x, y):
     gameDisplay.blit(message, (x, y))
 
 def game_over():
-    if numWrong >= 20:
-        display_message('You lose, start over', 50, 80, 250)
-        pygame.display.update()
-        time.sleep(2)
-        game_loop()
+    global start
+    display_message('You lose, start over', 50, 80, 250)
+    pygame.display.update()
+    time.sleep(2)
+
+    game_loop()
+    start = 1
+
 
 class Indicators:
 
@@ -107,12 +109,13 @@ option4 = Indicators()
 def game_loop():
     global timeElapsed
     global numWrong
+    global start
     numRight = 0
     numWrong = 0
     targetHit = 0
 
     xplayer = ((display_width / 2) - (img.size[0] / 2))
-    yplayer = display_height - img.size[1]
+    yplayer = display_height - img.size[0]
 
     xmarker = xplayer - Ximg.size[0]
     ymarker = yplayer
@@ -124,9 +127,18 @@ def game_loop():
     whichTool()
     tempActiveTarget = activeTarget
 
-    for event in USEREVENT + 1:
-        for i in ['Ready', 'Set', 'Go']:
-            print(i)
+    def blank_game():
+        gameDisplay.fill(grey)
+        player(playerStage1, xplayer, yplayer)
+        dMarker(xmarker, ymarker)
+
+        option1.target((display_width - display_width), (display_height - 200), blue)
+        option2.target((display_width - display_width), (display_height - 500), blue)
+        option3.target((display_width - 100), (display_height - 500), blue)
+        option4.target((display_width - 100), (display_height - 200), blue)
+
+        option1.tool(zTool, 480, 50)
+        option3.tool(xTool, 600, 50)
 
     while exitGame==False:
 
@@ -242,18 +254,7 @@ def game_loop():
                 if targetHit == 0:
                     numWrong += 1
 
-
-        gameDisplay.fill(grey)
-        player(playerStage1, xplayer, yplayer)
-        dMarker(xmarker, ymarker)
-
-        option1.target((display_width - display_width), (display_height - 200), blue)
-        option2.target((display_width - display_width), (display_height - 500), blue)
-        option3.target((display_width - 100), (display_height - 500), blue)
-        option4.target((display_width - 100), (display_height - 200), blue)
-
-        option1.tool(zTool, 480, 50)
-        option3.tool(xTool, 600, 50)
+        blank_game()
 
         if timeElapsed > 5:
 
@@ -280,16 +281,28 @@ def game_loop():
         if timeElapsed > 60: # 46 for 800 mili
             timeElapsed = 0
 
+        if numWrong >= 25:
+            game_over()
+
+        if start == 1:
+            for word in ['Ready', 'Set', 'Go']:
+                display_message(word, 40, 400, 400)
+                pygame.display.update()
+                time.sleep(0.8)
+                blank_game()
+
         # print(timeElapsed)
         display_message('hit: {}'.format(numRight), 40, 10, 70)
 
         display_message('missed: {}'.format(numWrong), 40, 10, 140)
         tempActiveTarget = activeTarget
-        game_over()
+
+        start = 0
 
         pygame.display.update()
         clock.tick(60)
 
+start = 1
 game_loop()
 pygame.quit()
 quit()
