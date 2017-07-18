@@ -4,6 +4,7 @@ import time
 import random
 from pygame.locals import *
 from threading import *
+from os.path import abspath
 
 # COLORS stored in RGB format
 black = (0, 0, 0)
@@ -38,18 +39,21 @@ pygame.time.set_timer(USEREVENT + 1, 800)
 gameFont = pygame.font.SysFont('CharlemagneStd-Bold.otf', 20)
 
 # all PLAYER IMAGES stored as variables
-playerStage1 = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/playerStage1.png')
-with Image.open('C:/Programming/PythonProjects/PyGame/speedTrial/playerStage1.png') as img:
+
+playerStage1 = pygame.image.load(abspath('playerStage1.png'))
+
+with Image.open(abspath('playerStage1.png')) as img:
     width, height = img.size
 
-directionMarker = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/directionDetector.png')
-with Image.open('C:/Programming/PythonProjects/PyGame/speedTrial/directionDetector.png') as Ximg:
+directionMarker = pygame.image.load(abspath('directionDetector.png'))
+
+with Image.open(abspath('directionDetector.png')) as Ximg:
     width, height = Ximg.size
 
-zTool = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/zTool.png')
-zToolActive = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/zToolActive.png')
-xTool = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/xTool.png')
-xToolActive = pygame.image.load('C:/Programming/PythonProjects/PyGame/speedTrial/xToolActive.png')
+zTool = pygame.image.load(abspath('zTool.png'))
+zToolActive = pygame.image.load(abspath('zToolActive.png'))
+xTool = pygame.image.load(abspath('xTool.png'))
+xToolActive = pygame.image.load(abspath('xToolActive.png'))
 
 # definitions of functions
 
