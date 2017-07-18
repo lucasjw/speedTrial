@@ -85,10 +85,38 @@ def display_message(text, size, x, y):
 
 def game_over():
     global start
+    global difchange
     display_message('You lose, start over', 50, 80, 250)
-    pygame.display.update()
-    time.sleep(2)
 
+    display_message('Would you like to', 25, 270, 300)
+    display_message('go up a difficulty?', 25, 264, 330)
+
+    display_message('YES  //  NO', 40, 275, 490)
+    display_message('enter \'y\' or \'n\'', 25, 280, 527)
+    userInput = 0
+    difchange = 0
+
+    pygame.display.update()
+
+    while userInput == 0:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                quit()
+            elif event.type == KEYDOWN:
+                if event.key == pygame.K_ESCAPE:
+                    pygame.quit()
+                    quit()
+                elif event.key == pygame.K_y:
+                    userInput = 1
+                    difchange = 1
+                elif event.key == pygame.K_n:
+                    userInput = 1
+                    difchange = 0
+
+    # time.sleep(2)
+    
+    print(userInput, difchange)
     game_loop()
     start = 1
 
