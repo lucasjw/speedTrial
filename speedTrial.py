@@ -34,7 +34,8 @@ global start
 
 clock = pygame.time.Clock()
 
-pygame.time.set_timer(USEREVENT + 1, 800)
+current_dif = 1000
+pygame.time.set_timer(USEREVENT + 1, current_dif)
 
 gameFont = pygame.font.SysFont('CharlemagneStd-Bold.otf', 20)
 
@@ -90,11 +91,38 @@ def display_message(text, size, x, y):
 def game_over():
     global start
     global difchange
-    display_message('You lose, start over', 50, 80, 250)
+    global numRight
+    global numWrong
+
+    def blank_game():   # reuse function from game_loop function
+        gameDisplay.fill(grey)
+        player(playerStage1, xplayer, yplayer)
+        dMarker(xmarker, ymarker)
+
+        option1.target((display_width - display_width), (display_height - 200), blue)
+        option2.target((display_width - display_width), (display_height - 500), blue)
+        option3.target((display_width - 100), (display_height - 500), blue)
+        option4.target((display_width - 100), (display_height - 200), blue)
+
+        option1.tool(zTool, 480, 50)
+        option3.tool(xTool, 600, 50)
+
+
+    xplayer = ((display_width / 2) - (img.size[0] / 2))
+    yplayer = display_height - img.size[0]
+    xmarker = xplayer - Ximg.size[0]
+    ymarker = yplayer
+
+    blank_game()
+
+
+    if numWrong >= 25:
+        display_message('You lost, start over.', 50, 80, 250)
+    if numRight >= 30:
+        display_message('You won! go again.', 50, 100, 250)
 
     display_message('Would you like to', 25, 270, 300)
     display_message('go up a difficulty?', 25, 264, 330)
-
     display_message('YES  //  NO', 40, 275, 490)
     display_message('enter \'y\' or \'n\'', 25, 280, 527)
 
@@ -124,6 +152,7 @@ def game_over():
 
     game_loop()
     start = 1
+    return difchange
 
 
 class Indicators:
@@ -139,28 +168,35 @@ option2 = Indicators()
 option3 = Indicators()
 option4 = Indicators()
 
+
 def game_loop():
     global timeElapsed
     global numWrong
     global start
     global prevNumberCount
+    global difchange
+    global current_dif
+    global numRight
+
+    if difchange == 1:
+        current_dif = current_dif - 75
+        pygame.time.set_timer(USEREVENT + 1, current_dif)
+        print(current_dif)
+
+
     numRight = 0
     numWrong = 0
     targetHit = 0
+
+    roundWon = False
+    exitGame = False
 
     xplayer = ((display_width / 2) - (img.size[0] / 2))
     yplayer = display_height - img.size[0]
 
     xmarker = xplayer - Ximg.size[0]
     ymarker = yplayer
-    roundWon = False
-    exitGame = False
 
-    prevNumberCount = [numRight, numWrong]
-
-    whichTarget()
-    whichTool()
-    tempActiveTarget = activeTarget
 
     def blank_game():
         gameDisplay.fill(grey)
@@ -174,6 +210,12 @@ def game_loop():
 
         option1.tool(zTool, 480, 50)
         option3.tool(xTool, 600, 50)
+
+    prevNumberCount = [numRight, numWrong]
+
+    whichTarget()
+    whichTool()
+    tempActiveTarget = activeTarget
 
     if start == 1:
         for word in ['Ready', 'Set', 'Go']:
@@ -329,6 +371,11 @@ def game_loop():
 
         if numWrong >= 25:
             game_over()
+            difchange = game_over()
+
+        if numRight >= 30:
+            game_over()
+            difchange = game_over()
 
 
         # print(timeElapsed)
@@ -342,6 +389,7 @@ def game_loop():
         pygame.display.update()
         clock.tick(60)
 
+difchange = 0
 start = 1
 game_loop()
 pygame.quit()
