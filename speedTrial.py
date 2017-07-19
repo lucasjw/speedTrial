@@ -40,20 +40,20 @@ gameFont = pygame.font.SysFont('CharlemagneStd-Bold.otf', 20)
 
 # all PLAYER IMAGES stored as variables
 
-playerStage1 = pygame.image.load(abspath('playerStage1.png'))
+playerStage1 = pygame.image.load(abspath('images/playerStage1.png'))
 
-with Image.open(abspath('playerStage1.png')) as img:
+with Image.open(abspath('images/playerStage1.png')) as img:
     width, height = img.size
 
-directionMarker = pygame.image.load(abspath('directionDetector.png'))
+directionMarker = pygame.image.load(abspath('images/directionDetector.png'))
 
-with Image.open(abspath('directionDetector.png')) as Ximg:
+with Image.open(abspath('images/directionDetector.png')) as Ximg:
     width, height = Ximg.size
 
-zTool = pygame.image.load(abspath('zTool.png'))
-zToolActive = pygame.image.load(abspath('zToolActive.png'))
-xTool = pygame.image.load(abspath('xTool.png'))
-xToolActive = pygame.image.load(abspath('xToolActive.png'))
+zTool = pygame.image.load(abspath('images/zTool.png'))
+zToolActive = pygame.image.load(abspath('images/zToolActive.png'))
+xTool = pygame.image.load(abspath('images/xTool.png'))
+xToolActive = pygame.image.load(abspath('images/xToolActive.png'))
 
 # definitions of functions
 
@@ -97,6 +97,7 @@ def game_over():
 
     display_message('YES  //  NO', 40, 275, 490)
     display_message('enter \'y\' or \'n\'', 25, 280, 527)
+
     userInput = 0
     difchange = 0
 
@@ -118,9 +119,9 @@ def game_over():
                     userInput = 1
                     difchange = 0
 
-    # time.sleep(2)
-    
+
     print(userInput, difchange)
+
     game_loop()
     start = 1
 
